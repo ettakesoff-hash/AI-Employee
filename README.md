@@ -53,30 +53,26 @@ Get a free NewsAPI key at [newsapi.org/register](https://newsapi.org/register) (
 NEWS_API_KEY=your_key_here
 ```
 
-### 3. Fill in your context
+### 3. Run the setup
 
-These files are your AI employee's onboarding. The more you fill in, the better it works.
+Start Claude Code, then run the interactive setup — it asks you questions and fills in all your context files automatically:
 
-**`context/business.md`** — Your company or project
-- Name, what you do, products/services, audience, tech stack
+```
+/project:setup
+```
 
-**`context/personal.md`** — You
-- Your name, role, communication style, what you use this for
+Claude will ask about your business, your role, your goals, and your current metrics. Answer the questions and it writes everything for you. Takes about 5 minutes.
 
-**`context/strategy.md`** — What matters now
-- Top priority, current goals, key metrics, what's NOT a priority
-
-**`context/data.md`** — Current numbers (optional)
-- Latest metrics, data sources
-
-> Not sure what to write? Check `context/_examples.md` for three filled-in examples (content agency, student, consulting firm).
+> Want to fill in the files manually instead? Check `context/_examples.md` for three filled-in examples to use as a guide.
 
 ### 4. Start working
 
-1. Open the terminal in VS Code
-2. Start Claude Code
-3. Type `/project:prime` to load your context
-4. Ask Claude to do something — follow an instruction, create a plan, or just chat
+After setup, every new session just needs:
+```
+/project:prime
+```
+
+This loads your context so Claude knows who you are. Then ask it to do something — follow an instruction, create a plan, or just chat.
 
 ---
 
@@ -118,6 +114,7 @@ aide-workspace/
 ├── .claude/
 │   ├── settings.json          # Permissions (safe mode)
 │   └── commands/
+│       ├── setup.md           # /project:setup — interactive first-time setup
 │       ├── prime.md           # /project:prime — load context
 │       ├── create-plan.md     # /project:create-plan — plan a task
 │       └── implement.md       # /project:implement — execute a plan
@@ -147,6 +144,7 @@ aide-workspace/
 
 | Command | What It Does |
 |---------|-------------|
+| `/project:setup` | First-time setup. Asks you questions, fills in all your context files automatically. |
 | `/project:prime` | Loads your context so Claude knows who you are. Run at the start of every session. |
 | `/project:create-plan` | Creates a step-by-step plan for a task. Saves it to `instructions/`. |
 | `/project:implement` | Executes the most recent plan, self-correcting when things break. |

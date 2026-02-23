@@ -1,363 +1,800 @@
-# AI Digital Employee — $97 Skool Course
+# AI Digital Employee — Skool Course
 
-## Course Overview
-
-**Name:** AI Digital Employee
 **Price:** $97
-**Platform:** Skool
-**Tagline:** Set up an AI employee that knows your business, follows your workflows, and does the work — in under an hour.
-**Promise:** By the end of this course, you'll have a fully configured AI workspace that automates your repetitive work using Claude Code.
-
-**Who it's for:**
-- Founders and business owners who want AI to handle operations, content, and research
-- Employees who want to automate parts of their role
-- Students who want to automate coursework and research
-- Anyone who's tried ChatGPT but wants something that actually remembers who they are
-
-**Format:** 7 lessons. Each lesson = 1 video. Watch it, do it, move on.
+**Lessons:** 7 videos
+**Total recording time:** ~90-120 min
+**Template repo:** github.com/systemstoscale/AI-Digital-Employee
 
 ---
 
-## Lesson 1: Why You're Using AI Wrong (10-15 min)
+# LESSON 1: The AI Employee Model
+**Video length:** 10-15 min | **Format:** Talking head + screen share diagrams
 
-*Record: Talking head + screen share diagrams*
+## Copy this into the Skool lesson description:
 
-**What you'll cover:**
-1. The chatbot trap — most people have long, messy conversations with no structure, no memory, no consistency
-2. The fix — treat AI like an employee: give it onboarding (context), task guides (instructions), and tools (scripts)
-3. The workspace model — one folder with 4 sub-folders:
-   - `context/` = onboarding (who you are, what you do)
-   - `instructions/` = SOPs (how to do each task)
-   - `scripts/` = tools (code that pulls data)
-   - `outputs/` = deliverables (finished work)
-4. Context stacking — the 5 layers that make AI output actually good:
-   - CLAUDE.md → business.md → personal.md → strategy.md → data.md
-   - Show the diagram: each layer builds on the last
-5. The 4 mistakes beginners make:
-   - No context → bad output
-   - Chatbot mode → inconsistent results
-   - No planning loops → janky workflows
-   - No scripts → no real-time data
-
-**On screen:** Context stacking diagram, before/after quality comparison, workspace folder structure
-
-**End with:** "Now you understand the model. Next lesson, we set it up."
+> Most people use AI like a chatbot — long messy conversations, inconsistent output, no memory between sessions. In this lesson, you'll learn how to set up AI as a digital employee with context, workflows, and tools — the same model we use at Skalers to build AI systems for 7-9 figure companies.
 
 ---
 
-## Lesson 2: Setup — Clone to Working in 15 Minutes (15-20 min)
+### SECTION 1: The Problem (3 min)
 
-*Record: Full screen share, step by step*
+**Talking points:**
 
-**What you'll cover:**
+You're using AI wrong. Here's what most people do:
+- Open ChatGPT or Claude
+- Type a long prompt
+- Get a mediocre answer
+- Try again with a different prompt
+- Waste 30 minutes going back and forth
+- End up rewriting it yourself anyway
 
-**Part 1 — Install the tools (5 min)**
-1. Download VS Code from code.visualstudio.com (or Antigravity from antigravity.devcycle.cc)
-2. Open VS Code, go to Extensions, search "Claude Code", install it
-3. Open terminal (Terminal → New Terminal)
-4. Verify: `node --version` (need 18+), `python3 --version` (need 3.x)
-5. Reassure: "This is not coding. It's chatting with a bot inside a folder."
+The output is inconsistent because the AI has zero context about who you are, what you do, or what you're trying to achieve. It's like hiring someone and giving them no onboarding, no SOPs, and no tools — then wondering why they can't do the job.
 
-**Part 2 — Clone the template (3 min)**
-1. Open terminal in VS Code
-2. Run: `git clone https://github.com/systemstoscale/AI-Digital-Employee.git`
-3. File → Open Folder → select the cloned folder
-4. Quick tour: walk through every folder and file on screen. 30 seconds max.
+### SECTION 2: The Fix — Treat AI Like an Employee (3 min)
 
-**Part 3 — Get your free API key (2 min)**
+**Talking points:**
+
+When you hire a new employee, you give them:
+- **Onboarding** — who the company is, what it does, how it works
+- **Task guides** — SOPs for the work they'll be doing
+- **Tools** — software, accounts, access to what they need
+- **A place to put finished work** — shared drives, project boards
+
+That's exactly what we're going to build. One folder on your computer with 4 sub-folders:
+
+**Show this diagram on screen:**
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    YOUR WORKSPACE                       │
+│                                                         │
+│  ┌─────────┐  ┌──────────────┐  ┌─────────┐  ┌──────┐ │
+│  │ context/ │→ │instructions/ │→ │scripts/ │→ │outputs│ │
+│  │         │  │              │  │         │  │      │  │
+│  │WHO YOU  │  │ WHAT TO DO   │  │  HOW    │  │RESULTS│ │
+│  │  ARE    │  │              │  │         │  │      │  │
+│  └─────────┘  └──────────────┘  └─────────┘  └──────┘ │
+│                                                         │
+│  Onboarding    Task Guides       Tools      Deliverables│
+└─────────────────────────────────────────────────────────┘
+```
+
+- `context/` = Onboarding. Who you are, your business, your goals.
+- `instructions/` = SOPs. Step-by-step task guides the AI follows.
+- `scripts/` = Tools. Code that pulls data from APIs, automates actions.
+- `outputs/` = Deliverables. Where finished work gets saved.
+
+### SECTION 3: Context Stacking (3 min)
+
+**Talking points:**
+
+The secret to great AI output is context stacking. You layer information so the AI has the full picture before it does anything.
+
+**Show this diagram on screen:**
+
+```
+┌─────────────────────────────────────────────┐
+│                                             │
+│          💬 INTELLIGENT CONVERSATION        │
+│          (Your tasks and requests)          │
+│                                             │
+├─────────────────────────────────────────────┤
+│  Layer 5: data.md      → Current numbers    │
+├─────────────────────────────────────────────┤
+│  Layer 4: strategy.md  → What matters now   │
+├─────────────────────────────────────────────┤
+│  Layer 3: personal.md  → Who you are        │
+├─────────────────────────────────────────────┤
+│  Layer 2: business.md  → What the company   │
+│                           does              │
+├─────────────────────────────────────────────┤
+│  Layer 1: CLAUDE.md    → Workspace rules    │
+│                          & purpose          │
+└─────────────────────────────────────────────┘
+```
+
+Every time you start a new session, the AI reads all of this first. Then when you give it a task, it has the full picture — your business, your voice, your goals, your metrics. The output quality difference is massive.
+
+### SECTION 4: The 4 Mistakes (3 min)
+
+**Show this on screen:**
+
+```
+MISTAKE                          → FIX
+─────────────────────────────────────────────────
+1. Using AI like a chatbot       → Reusable commands
+2. No context each session       → /project:prime
+3. No planning loops             → /project:create-plan
+                                   + /project:implement
+4. No external data              → Scripts that pull
+                                   real-time data
+```
+
+**Talking points:**
+
+1. **Chatbot mode** — You chat back and forth, waste tokens, get diluted output. Fix: create reusable command files (instructions) that you run every time.
+2. **No context** — Every session starts from zero. Fix: run `/project:prime` every time — loads your full context in seconds.
+3. **No planning** — You try to do everything in one message. Fix: use `/project:create-plan` to design the workflow, then `/project:implement` to execute it.
+4. **No real data** — The AI is guessing instead of using your actual numbers. Fix: scripts that pull real-time data from APIs.
+
+**End with:** "That's the model. Now let's set it up."
+
+---
+---
+
+# LESSON 2: Setup — Zero to Working in 10 Minutes
+**Video length:** 15-20 min | **Format:** Full screen share, every click shown
+
+## Copy this into the Skool lesson description:
+
+> In this lesson, you'll install everything, clone the template, and run a live demo that fetches real AI news and turns it into LinkedIn posts, tweets, and a newsletter — automatically. By the end of this video, you'll have a working AI employee on your machine.
+
+---
+
+### PART 1: Install the Tools (5 min)
+
+**Step by step on screen:**
+
+1. **Download VS Code**
+   - Go to code.visualstudio.com
+   - Download for your machine (Mac/Windows)
+   - Install it, open it
+   - OR download Antigravity from antigravity.devcycle.cc (VS Code fork with Claude built in)
+
+2. **Install Claude Code**
+   - In VS Code: go to Extensions (Cmd+Shift+X)
+   - Search "Claude Code"
+   - Install the official Anthropic extension
+
+3. **Open the terminal**
+   - Terminal → New Terminal (or Ctrl+`)
+   - Say: "This is where you'll type commands. It's not scary."
+
+4. **Verify prerequisites**
+   ```
+   node --version    → need v18 or higher
+   python3 --version → need 3.x
+   ```
+
+### PART 2: Clone the Template (3 min)
+
+**On screen:**
+
+```bash
+git clone https://github.com/systemstoscale/AI-Digital-Employee.git
+```
+
+Then: File → Open Folder → select the cloned folder.
+
+**Quick tour** — 30 seconds, point at each folder:
+- context/ → "This is where your info goes"
+- instructions/ → "These are your task guides"
+- scripts/ → "Code that pulls external data"
+- outputs/ → "Where finished work lands"
+- CLAUDE.md → "The AI reads this every session"
+
+### PART 3: Get Your Free API Key (2 min)
+
+**On screen:**
+
 1. Go to newsapi.org/register
-2. Create account (name, email, password — 30 seconds)
+2. Sign up (name, email, password — 30 seconds)
 3. Copy the API key
-4. Open `.env` in VS Code, paste it after `NEWS_API_KEY=`
-5. Save
+4. In VS Code: open `.env`
+5. Paste after `NEWS_API_KEY=`
+6. Cmd+S to save
 
-**Part 4 — Set up your shortcut aliases (3 min)**
+Say: "This is a free API that gives us real news data. 100 requests per day. We're using it to show you the full pipeline."
 
-IMPORTANT: Explain clearly that there are TWO places you type things:
-- The **regular terminal** — where you run normal commands like `python3`, `git`, etc.
-- **Inside Claude Code** — where you chat with the AI and use `/project:` commands
+### PART 4: Set Up Your Shortcut Aliases (3 min)
 
-The aliases let you start Claude Code with one command from ANY terminal window.
+**IMPORTANT — explain clearly:**
 
-1. Open your terminal (regular terminal, NOT inside Claude Code)
-2. Run this command — copy and paste it exactly:
+Say: "There are TWO places you type things. The regular terminal — where you run normal commands. And inside Claude Code — where you chat with the AI. Right now we're going to set up shortcuts so you can start Claude Code with just 2 letters."
+
+**On screen — paste this into the terminal:**
+
+```bash
+echo '
+# AIDE — AI Digital Employee aliases
+alias cs="cd ~/AI-Digital-Employee && claude"
+alias cr="cd ~/AI-Digital-Employee && claude --dangerously-skip-permissions -p /project:prime"' >> ~/.zshrc
+```
+
+Then close and reopen the terminal (or `source ~/.zshrc`).
+
+**Explain:**
+
+```
+cs = Claude Safe
+     Starts Claude Code. You type /project:prime manually.
+     Good for learning.
+
+cr = Claude Risky (YOLO mode)
+     Starts Claude Code with all permissions + auto-primes.
+     No permission popups, reads your context automatically.
+     This is what you'll use 90% of the time.
+```
+
+**Demo:** Type `cr` → watch it start and auto-prime.
+
+Say: "From now on, every time you want your AI employee, you open a terminal and type `cr`. Two letters. That's it."
+
+### PART 5: Run the Live Demo (5 min)
+
+**On screen:**
+
+1. In the regular terminal (NOT inside Claude Code):
+   ```bash
+   python3 scripts/fetch-news.py
    ```
-   echo '
-   # AIDE — AI Digital Employee aliases
-   alias cs="cd /path/to/AI-Digital-Employee && claude"
-   alias cr="cd /path/to/AI-Digital-Employee && claude --dangerously-skip-permissions -p /project:prime"' >> ~/.zshrc
+2. Open `outputs/latest-news.md` — show 10 real AI articles
+
+3. Type `cr` to start Claude Code — it auto-primes
+
+4. Type:
    ```
-   (Replace `/path/to/AI-Digital-Employee` with wherever you cloned the repo)
-3. Close and reopen your terminal (or run `source ~/.zshrc`)
-4. Now test it:
-   - Type `cs` → starts Claude Code in safe mode (asks permission before doing things)
-   - Type `cr` → starts Claude Code in YOLO mode AND auto-primes (no permission prompts, reads your context automatically, ready to go instantly)
+   Follow the news-to-content instruction using the news you just fetched.
+   ```
 
-Explain what each does:
-- `cs` = **Claude Safe** — starts Claude Code, you manually type `/project:prime` to load context
-- `cr` = **Claude Risky** — starts Claude Code with all permissions, auto-loads your context. This is what you'll use 90% of the time.
+5. Watch Claude:
+   - Read the news articles
+   - Pick the 3 best stories
+   - Write 3 LinkedIn posts with hooks
+   - Write 6 tweets (2 per story)
+   - Write a newsletter snippet
+   - Save everything to outputs/
 
-On screen: Show the terminal, paste the command, close and reopen, type `cr`, watch it auto-prime.
-
-"From now on, every time you want to use your AI employee, you just open a terminal and type `cr`. Two letters. That's it."
-
-**Part 5 — Run the live demo (5 min)**
-1. In terminal (before starting Claude): `python3 scripts/fetch-news.py`
-2. Open `outputs/latest-news.md` — show 10 real articles
-3. Type `cr` to start Claude Code in YOLO mode — it auto-primes
-4. Type: "Follow the news-to-content instruction using the news you just fetched"
-5. Watch Claude generate LinkedIn posts, tweets, and a newsletter snippet
 6. Open the output file — show the finished content
-7. Bonus: `python3 scripts/fetch-news.py "startup funding"` — show custom topics
 
-**On screen:** Every click, every command, every output file
+7. Bonus — try other topics:
+   ```bash
+   python3 scripts/fetch-news.py "startup funding"
+   python3 scripts/fetch-news.py "remote work"
+   ```
 
-**End with:** "You just automated content creation with a free API in 15 minutes. Now let's make it yours."
+**End with:** "You just automated content creation in 10 minutes using a free API. Now let's make it actually know who you are."
+
+---
+---
+
+# LESSON 3: Context — Onboard Your AI in 5 Minutes
+**Video length:** 10-15 min | **Format:** Screen share, running the setup command live
+
+## Copy this into the Skool lesson description:
+
+> You wouldn't hire an employee without onboarding them. In this lesson, you run one command that interviews you about your business, role, goals, and metrics — then automatically fills in all your context files. By the end, your AI employee knows exactly who you are.
 
 ---
 
-## Lesson 3: Context — Onboard Your AI Employee (15-20 min)
+### THE ONE COMMAND (10 min)
 
-*Record: Screen share, filling in real files live*
+**On screen:**
 
-**What you'll cover:**
+1. Start Claude Code (type `cr` or `claude`)
 
-**business.md (5 min)**
-- Open the file, walk through each placeholder
-- Fill it in live for your own business (or a demo business)
-- What to include: company name, what you do, products/services, audience + their pain point, tech stack, key links
-- Tip: more detail = better output. Don't be vague.
-- Mistake: writing "we help businesses grow" — be specific about HOW
+2. Type:
+   ```
+   /project:setup
+   ```
 
-**personal.md (4 min)**
-- Fill in: name, role, coding experience level
-- Communication style: brief and direct? step-by-step? detailed?
-- Output format: markdown? slides? plain text?
-- Risk tolerance: should the AI ask before acting, or move fast?
-- Pet peeves: tell it what you hate (filler phrases, generic intros, etc.)
+3. Claude asks you questions in 4 rounds:
 
-**strategy.md (4 min)**
-- Top priority: your #1 focus right now (1-2 sentences)
-- Current goals: 2-3 goals with timeframes
-- Active projects: what's in progress, what's the next step
-- Key metrics: the numbers you track
-- What's NOT a priority: crucial — stops the AI from wasting time on stuff that doesn't matter right now
+**Show this diagram:**
 
-**data.md — optional (2 min)**
-- When to use: you have metrics from analytics, CRM, etc.
-- Paste in your latest numbers
-- Can be updated manually or with a script later
+```
+┌──────────────────────────────────────────────────┐
+│              /project:setup                      │
+│                                                  │
+│  Round 1: Your Business  → writes business.md    │
+│  ┌──────────────────────────────────────┐        │
+│  │ Company name? What do you do?       │        │
+│  │ Products/services? Who do you serve? │        │
+│  │ Tech stack? Key links?              │        │
+│  └──────────────────────────────────────┘        │
+│                                                  │
+│  Round 2: You            → writes personal.md    │
+│  ┌──────────────────────────────────────┐        │
+│  │ Name? Role? Coding experience?      │        │
+│  │ Communication style? Pet peeves?    │        │
+│  └──────────────────────────────────────┘        │
+│                                                  │
+│  Round 3: Your Strategy  → writes strategy.md    │
+│  ┌──────────────────────────────────────┐        │
+│  │ Top priority? Goals? Active projects?│        │
+│  │ Metrics? What's NOT a priority?     │        │
+│  └──────────────────────────────────────┘        │
+│                                                  │
+│  Round 4: Your Data      → writes data.md       │
+│  ┌──────────────────────────────────────┐        │
+│  │ Current metrics? Data sources?      │        │
+│  │ (Optional — can skip)               │        │
+│  └──────────────────────────────────────┘        │
+│                                                  │
+│  ✅ Done → auto-primes → ready to work          │
+└──────────────────────────────────────────────────┘
+```
 
-**Test it (3 min)**
-- Run `/project:prime` with your filled-in context
-- Claude should now know who you are, what you do, what you're working on
-- Test: ask it a question about your business — the answer should reflect YOUR context
-- Show the difference: same question before context vs. after context
+4. Answer each round naturally — just talk/type like you're explaining your business to a new hire
 
-**On screen:** Side-by-side of each file being filled in, then the /prime output
+5. Claude writes each file immediately after you answer
 
-**End with:** "Your AI employee is now onboarded. It knows your business. Next: teach it what to do."
+6. At the end: Claude gives you a summary and says "Your AI employee is set up and ready."
+
+**Live on screen:** Run through the whole setup for a real business. Show how each context file gets filled in automatically.
+
+**For people who want to do it manually:**
+Say: "If you'd rather fill in the files yourself, check `context/_examples.md` — there are three filled-in examples you can use as a guide. A content agency, a student, and a consulting firm."
+
+**End with:** "Your AI employee now knows who you are, what you do, and what you're working on. Every session from now on, it starts with this context. Next: teach it what to do."
+
+---
+---
+
+# LESSON 4: Instructions — Automate Any Workflow
+**Video length:** 15-20 min | **Format:** Screen share, building a real instruction live
+
+## Copy this into the Skool lesson description:
+
+> Instructions are reusable task guides your AI follows every time — like SOPs for your digital employee. In this lesson, you'll learn the create-plan → implement loop and build your first custom workflow from scratch. This is where the real power is.
 
 ---
 
-## Lesson 4: Instructions — Teach It Your Workflows (15-20 min)
+### SECTION 1: How Instructions Work (3 min)
 
-*Record: Screen share, building a real instruction live*
+**Talking points:**
 
-**What you'll cover:**
+An instruction is just a text file with:
+- A goal (what it accomplishes)
+- Inputs (what info it needs)
+- Steps (what to do, in order)
+- Output format (where to save, how to structure)
 
-**How instructions work (3 min)**
-- An instruction = a text file with: goal, inputs, steps, output format
-- Why this beats chatting: same quality every time, saves you from re-explaining
-- Quick tour of `_template.md` — the structure every instruction follows
-- Quick tour of the 7 included examples — name each one and what it does
+```
+┌──────────────────────────────────────────────┐
+│  instructions/_example-news-to-content.md    │
+│                                              │
+│  Goal: Turn news into social content         │
+│  Inputs: topic, platforms                    │
+│  Steps:                                      │
+│    1. Run fetch-news.py                      │
+│    2. Pick 3 best stories                    │
+│    3. Write LinkedIn posts                   │
+│    4. Write tweets                           │
+│    5. Write newsletter snippet               │
+│  Output: outputs/news-content-[date].md      │
+└──────────────────────────────────────────────┘
+```
 
-**The planning loop (5 min)**
-- The two power commands: `/project:create-plan` and `/project:implement`
-- Demo: `/project:create-plan I want to automate my weekly LinkedIn posting`
-- Watch Claude: it reads the workspace, analyzes what exists, writes a detailed plan
-- Show the plan file — steps, files to create, decisions made
-- Then: `/project:implement` — watch Claude execute every step
+Why this beats chatting:
+- **Consistent** — same quality every time
+- **Fast** — no re-explaining
+- **Reusable** — run it daily, weekly, whenever
 
-**Build your first custom instruction live (7 min)**
-- Pick a real task (e.g., "write a weekly email newsletter from my notes")
-- Run `/project:create-plan`
-- Review the plan together — point out how Claude considers existing context and files
-- Run `/project:implement`
-- Watch it create the instruction file, update CLAUDE.md, and wire everything together
-- Test the new instruction — run it and show the output
+The template includes 7 example instructions. Quick tour — show each filename and what it does.
 
-**The self-correction loop (3 min)**
-- What happens when something fails: Claude reads the error, fixes the code, retests
-- Show it in action if possible (intentionally break something)
-- Claude updates the instruction's "Notes" section with what it learned
-- Over time, instructions get smarter — this is the key differentiator
+### SECTION 2: The Planning Loop (5 min)
 
-**On screen:** create-plan output, implement running live, the finished instruction file, the output
+**Show this diagram:**
 
-**End with:** "You now have reusable commands. Run them anytime, get consistent results. Next: real-time data."
+```
+┌─────────────┐     ┌──────────────┐     ┌─────────────┐
+│  YOU        │     │ CREATE PLAN  │     │ IMPLEMENT   │
+│             │     │              │     │             │
+│ "I want to  │────→│ Claude reads │────→│ Claude      │
+│  automate   │     │ workspace,   │     │ executes    │
+│  my weekly  │     │ designs the  │     │ every step, │
+│  report"    │     │ full plan    │     │ creates     │
+│             │     │              │     │ files,      │
+│             │     │ Saves to     │     │ self-       │
+│             │     │ instructions/│     │ corrects    │
+└─────────────┘     └──────────────┘     └─────────────┘
+                                               │
+                                               ▼
+                                    ┌─────────────────┐
+                                    │ ERROR?          │
+                                    │ Read → Fix →    │
+                                    │ Retest → Update │
+                                    │ instruction     │
+                                    └─────────────────┘
+```
+
+**Demo on screen:**
+
+1. Type: `/project:create-plan I want to automate writing a weekly LinkedIn recap of what I worked on`
+2. Watch Claude: read the workspace, analyze what exists, write a detailed plan
+3. Show the plan file — steps, files to create, decisions
+4. Type: `/project:implement`
+5. Watch Claude: create the instruction file, update CLAUDE.md, test it
+
+### SECTION 3: Build Your First Custom Instruction Live (7 min)
+
+**Pick a real task.** Suggestions:
+- "Automate my weekly email newsletter from rough notes"
+- "Create a competitor analysis report from a company name"
+- "Turn a meeting transcript into action items and follow-ups"
+
+Run through create-plan → implement live. Show every step.
+
+### SECTION 4: What's Possible — Real Examples from Skalers (3 min)
+
+**Talking points:**
+
+At Skalers.io, we build AI systems for 7-9 figure companies. The same model applies at any scale:
+
+```
+WHAT WE AUTOMATE AT SKALERS     → YOUR VERSION
+──────────────────────────────────────────────────
+AI Knowledge Base                → context/ files
+  (company data → instant        that give your
+  answers for any employee)       AI full context
+
+AI Client Acquisition            → instructions/
+  (autonomous outbound that       that automate
+  books calls 24/7)               your outreach
+
+AI Client Fulfillment            → scripts/ that
+  (onboarding, reporting,         pull data + do
+  QA, client comms)               the actual work
+```
+
+The difference between a $5K task automation and a $50K+ role automation is scope — but the building blocks are the same. Context. Instructions. Scripts. Outputs.
+
+You're learning the foundation that scales from personal productivity to enterprise systems.
+
+**End with:** "You can now create any workflow in minutes. Next: pulling real-time data."
+
+---
+---
+
+# LESSON 5: Scripts — Pull Live Data Into Your Workspace
+**Video length:** 10-15 min | **Format:** Screen share, building a new script live
+
+## Copy this into the Skool lesson description:
+
+> Scripts are how your AI employee connects to the outside world — pulling real-time data from APIs, scraping websites, fetching analytics. You don't write the code. Claude does. In this lesson, you'll add a new data source to your workspace.
 
 ---
 
-## Lesson 5: Scripts — Connect Real-Time Data (10-15 min)
+### SECTION 1: What Scripts Do (2 min)
 
-*Record: Screen share, adding a new script live*
+**Show this diagram:**
 
-**What you'll cover:**
+```
+┌──────────────┐    ┌──────────────┐    ┌──────────────┐
+│  EXTERNAL    │    │  SCRIPT      │    │  YOUR        │
+│  DATA        │    │              │    │  WORKSPACE   │
+│              │    │ fetch-news.py│    │              │
+│  NewsAPI ────│───→│ pulls data,  │───→│  outputs/    │
+│  YouTube     │    │ formats it,  │    │  latest-     │
+│  CRM         │    │ saves to     │    │  news.md     │
+│  Analytics   │    │ outputs/     │    │              │
+│  Any API     │    │              │    │  Claude      │
+│              │    │              │    │  reads this  │
+└──────────────┘    └──────────────┘    └──────────────┘
+```
 
-**What scripts do and why you don't need to code (2 min)**
-- Scripts = small programs that pull external data into your workspace
-- You don't write them — Claude writes them for you
-- The fetch-news.py is proof: it fetches 10 articles with zero coding from you
-- Pattern: script fetches data → saves to outputs/ → instruction processes it
+Pattern: Script fetches → saves to outputs/ → instruction processes it.
 
-**Add a new script with Claude — live (8 min)**
-- Pick a practical example: "I want to pull the top posts from Hacker News" (or YouTube data, or Google Trends)
-- Run: `/project:create-plan I want a script that fetches the top 10 Hacker News posts and saves them to outputs/`
-- Watch Claude research the approach, decide on the right API, write the plan
-- Run: `/project:implement`
-- Watch Claude write the script, test it, save it to scripts/
-- Run the script manually to verify it works
-- Show the output file
-- If it fails: show the self-correction loop live — Claude reads error, fixes, retries
+You don't write the code. You tell Claude what data you want. It figures out how to get it.
 
-**Free APIs worth knowing (2 min)**
-- NewsAPI — news (already included, 100 req/day free)
-- Serper — Google search results (2,500 free credits)
-- Apify — web scraping (free tier)
-- Any API: add the key to .env, tell Claude what you want, let it build the script
+### SECTION 2: Add a New Script Live (8 min)
 
-**On screen:** create-plan for a new script, implement running, the finished script, the output
+**On screen:**
 
-**End with:** "Your AI employee can now pull live data from the internet. Next: real workflows you can copy."
+1. Type: `/project:create-plan I want a script that fetches the top 10 Hacker News posts and saves them to outputs/`
+
+2. Watch Claude:
+   - Research the Hacker News API
+   - Design the script
+   - Write the plan
+
+3. Type: `/project:implement`
+
+4. Watch Claude:
+   - Write the script
+   - Save it to scripts/
+   - Test it
+   - If it fails → read error → fix → retest (show this if it happens!)
+
+5. Run the script manually: `python3 scripts/fetch-hackernews.py`
+
+6. Show the output file
+
+### SECTION 3: Free APIs You Can Connect (2 min)
+
+**Show this on screen:**
+
+```
+API                  WHAT IT DOES                    COST
+─────────────────────────────────────────────────────────
+NewsAPI              Latest news on any topic        Free (100/day)
+Serper               Google search results           Free (2,500 credits)
+Apify                Web scraping (YouTube, etc.)    Free tier
+OpenWeatherMap       Weather data                    Free (1,000/day)
+Hacker News          Top tech posts                  Free (unlimited)
+Reddit JSON          Subreddit posts                 Free (no key needed)
+─────────────────────────────────────────────────────────
+Any API:  Add key to .env → tell Claude what you want
+          → it builds the script for you
+```
+
+**Skalers example:**
+
+Say: "At Skalers, we use Apify to scrape competitor data, LinkedIn profiles, and YouTube channels — then feed that into AI systems that generate reports and outreach. Same pattern, bigger scale. The building block is always: script pulls data → AI processes it."
+
+**End with:** "Your AI employee can now pull live data from anywhere. Next: let's see complete workflows."
+
+---
+---
+
+# LESSON 6: Real-World Workflows You Can Steal
+**Video length:** 15-20 min | **Format:** Screen share, running each workflow end to end
+
+## Copy this into the Skool lesson description:
+
+> Watch 3 complete workflows run from start to finish — content creation, business operations, and research. Each one shows the full pipeline: data in → AI processing → formatted output. Pick the one closest to your role and start using it today.
 
 ---
 
-## Lesson 6: Real-World Workflows You Can Steal (15-20 min)
+### WORKFLOW 1: Content Creator (6 min)
 
-*Record: Screen share, running each workflow end to end*
+**Context:** Content marketing agency (show example from `_examples.md`)
 
-**What you'll cover:**
+**On screen — run the full pipeline:**
 
-**Workflow 1: Content Creator (5 min)**
-- Context: content marketing agency (show the example from `_examples.md`)
-- Run the full pipeline live:
-  1. `python3 scripts/fetch-news.py "saas marketing"`
-  2. `/project:prime`
-  3. "Follow the news-to-content instruction"
-- Show output: 3 LinkedIn posts, 6 tweets, newsletter snippet
-- Then: "Follow the write-blog-post instruction on the topic: why SaaS companies need a content calendar"
-- Show output: full 1,500-word blog post with SEO metadata
-- Then: "Follow the repurpose-content instruction using the blog post you just wrote"
-- Show output: the blog post turned into social content
-- Time comparison: this took 5 minutes. Doing it manually takes 3+ hours.
+```
+INPUT                    INSTRUCTION                  OUTPUT
+─────────────────────────────────────────────────────────────
+"AI trends"         →   news-to-content          →   3 LinkedIn posts
+                                                      6 tweets
+                                                      1 newsletter snippet
 
-**Workflow 2: Business Operations (5 min)**
-- Context: consulting firm ops manager
-- "Follow the weekly-report instruction. Here are my notes: [paste rough notes]"
-- Show output: formatted status report with highlights, project updates, metrics
-- "Follow the competitor-analysis instruction for [company name]"
-- Show output: structured competitor profile with comparison table
+"How to build a     →   write-blog-post          →   1,500-word SEO blog
+ content calendar"                                    with metadata
 
-**Workflow 3: Student (5 min)**
-- Context: CS student
-- "Follow the research-paper instruction. Topic: consistency models in distributed databases"
-- Show the multi-step process: research question → sources → bibliography → outline
-- "Follow the study-guide instruction for distributed systems, focusing on consensus algorithms"
-- Show output: study guide with key concepts, practice questions, answers
+blog post file      →   repurpose-content        →   3 LinkedIn posts
+                                                      5 tweets
+                                                      1 newsletter snippet
+                                                      1 thread
+```
 
-**Build your own (3 min)**
-- Recap the pattern: identify a repeating task → create-plan → implement → test → iterate
-- Encourage: "Pick ONE task you do every week. Automate it before moving on."
+Run each one live. Show the output.
 
-**On screen:** Each workflow running, outputs side by side
+Say: "This whole pipeline — news to content to repurposed social — takes about 5 minutes. Doing it manually takes 3+ hours."
 
-**End with:** "You've seen 6 workflows across 3 different roles. Pick the one closest to yours, customize the context, and start using it today."
+### WORKFLOW 2: Business Operations (5 min)
+
+**Context:** Consulting firm ops manager
+
+**On screen:**
+
+```
+INPUT                    INSTRUCTION                  OUTPUT
+─────────────────────────────────────────────────────────────
+Rough weekly notes  →   weekly-report            →   Formatted status report
+                                                      with highlights, metrics,
+                                                      priorities
+
+Competitor name     →   competitor-analysis      →   Full competitor profile
+                                                      with comparison table
+                                                      and opportunities
+```
+
+Run each one live. Show the output.
+
+**Skalers connection:**
+Say: "This is exactly what our AI Fulfillment systems do at scale — automated reporting, client status updates, competitive intelligence. We charge $60-120K to build these for enterprise clients. You're learning the same patterns for free."
+
+### WORKFLOW 3: Student / Researcher (5 min)
+
+**Context:** CS student
+
+**On screen:**
+
+```
+INPUT                    INSTRUCTION                  OUTPUT
+─────────────────────────────────────────────────────────────
+Research topic      →   research-paper           →   Annotated bibliography
+                                                      Paper outline
+                                                      Full draft
+                                                      References
+
+Course topic        →   study-guide              →   Key concepts
+                                                      Practice questions
+                                                      Exam topics
+                                                      Answers
+```
+
+Run each one live. Show the multi-step output.
+
+### BUILD YOUR OWN (3 min)
+
+**Show this pattern:**
+
+```
+ANY REPEATING TASK YOU DO:
+
+1. Identify it      → "I write a weekly report every Monday"
+2. /create-plan     → Claude designs the workflow
+3. /implement       → Claude builds the instruction
+4. Test it          → Run the instruction, check the output
+5. Iterate          → Refine steps, add edge cases
+6. Reuse forever    → Same quality, every time, in minutes
+```
+
+Say: "Pick ONE task you do every week. Automate it before moving on to the next lesson."
+
+**End with:** "You've seen 6 workflows across 3 different roles. Next: power user tips to make this even faster."
+
+---
+---
+
+# LESSON 7: Level Up — Speed, Skills, and Scaling
+**Video length:** 10-15 min | **Format:** Screen share with tips and demos
+
+## Copy this into the Skool lesson description:
+
+> You've got the foundation. Now make it fast. In this lesson: YOLO mode for speed, running multiple AI instances in parallel, installing skills/plugins, and the path from personal productivity to building AI systems as a service.
 
 ---
 
-## Lesson 7: Level Up — Power User Tips (10-15 min)
+### TIP 1: YOLO Mode for Speed (3 min)
 
-*Record: Screen share with tips and demos*
+**On screen:**
 
-**What you'll cover:**
+```
+SAFE MODE (cs)                   YOLO MODE (cr)
+─────────────────────────────────────────────────
+Claude asks permission           Claude just does it
+for every action
+                                 + auto-primes
+Good for learning                (reads your context
+                                  automatically)
 
-**YOLO mode (3 min)**
-- Safe mode (default): Claude asks permission for every action — good for learning
-- YOLO mode: Claude moves fast, no permission prompts — good for speed
-- How to set it up: shell aliases `cs` (safe) and `cr` (YOLO + auto-prime)
-- Show the command to set aliases, then demo: `cr` → instant primed session
-- When to use which: safe mode when experimenting, YOLO when you know what you're doing
+"Can I write to this file?"      Just writes it
 
-**Multiple instances (2 min)**
-- Command+backslash → new terminal
-- Run `cr` in each → two Claude instances side by side
-- Use case: plan in one terminal, implement in another
-- Use case: run a long task in one, start something else in the other
+Slower but safer                 Fast. Use this 90%
+                                 of the time.
+```
 
-**Skills — plugins for your workspace (3 min)**
-- Skills = installable packages that add capabilities
-- Where to find them: github.com/anthropics/skills
-- Example: PowerPoint skill — turns any markdown report into a .pptx presentation
-- How to install: download the skill, put it in your workspace, Claude detects it
-- Browse the marketplace for ideas
+Demo: Show the speed difference. `cr` → instant primed session → immediately give it a task.
 
-**MCP integrations — advanced (3 min)**
-- MCP = Model Context Protocol — lets Claude connect to external services
-- Example: connect to Apify for YouTube channel scraping
-- Example: connect to a CRM, database, or internal tool
-- When to use MCP vs. a simple script: MCP for ongoing connections, scripts for one-off data pulls
-- Note: "This is advanced. Start with scripts. Graduate to MCP when you need it."
+### TIP 2: Multiple Instances (2 min)
 
-**Keep improving (2 min)**
-- Review the "Notes" section of your instructions after each run
-- Update your strategy.md weekly or monthly
-- Share your best instructions in the community
-- The workspace compounds: every run makes it smarter
+**On screen:**
 
-**On screen:** YOLO mode demo, multiple terminals, skills marketplace, MCP config
+- Cmd+\ → new terminal pane
+- Type `cr` in each → two Claude instances side by side
 
-**End with:** "You now have everything you need. The template, the context, the instructions, the scripts. Go build. Share what you create in the community. I'll see you there."
+Use cases:
+- Plan in one terminal, implement in another
+- Run a long task in one, start something else in the other
+- Research in one, write in the other
+
+### TIP 3: Claude Skills / Plugins (3 min)
+
+**On screen:**
+
+Skills are installable packages that add capabilities to your workspace.
+
+Where to find them: github.com/anthropics/skills
+
+Example: PowerPoint skill → turns any markdown report into a .pptx presentation.
+
+Demo: Install a skill, show Claude using it.
+
+### TIP 4: The Self-Correction Loop (2 min)
+
+**Show this diagram:**
+
+```
+┌─────────┐    ┌─────────┐    ┌─────────┐    ┌──────────┐
+│  ERROR   │───→│  READ   │───→│  FIX    │───→│  UPDATE  │
+│  happens │    │  error  │    │  code   │    │  instruc-│
+│          │    │  message│    │  & re-  │    │  tion    │
+│          │    │         │    │  test   │    │  with    │
+│          │    │         │    │         │    │  lesson  │
+└─────────┘    └─────────┘    └─────────┘    └──────────┘
+                                                   │
+                                                   ▼
+                                         SYSTEM IS SMARTER
+                                         Same mistake never
+                                         happens twice
+```
+
+Over time, your instruction files accumulate lessons learned. The workspace compounds.
+
+### TIP 5: From Personal Productivity to Building AI Systems (3 min)
+
+**Talking points:**
+
+Everything you just learned is the foundation of what we build at Skalers for enterprise clients:
+
+```
+YOUR WORKSPACE                    ENTERPRISE AI SYSTEM
+──────────────────────────────────────────────────────
+context/                      →   AI Knowledge Base
+  (your business info)            (company-wide RAG database)
+                                  Value: $25-40K setup
+
+instructions/                 →   AI Acquisition System
+  (your task guides)              (autonomous outbound SDR)
+                                  Value: $45-80K setup
+
+scripts/                      →   AI Fulfillment System
+  (your data connectors)          (delivery + operations AI)
+                                  Value: $75-120K setup
+```
+
+The patterns are identical. The scale is different.
+
+If you want to go deeper:
+- Join the free Skalers community at skalers.io
+- Learn the IDEA Framework (Instructions → Decisions → Executions → AI)
+- Build these systems for clients at $20-100K per project
+
+**End with:** "You now have everything you need. The template, the context, the instructions, the scripts. Go build. Share what you create in the community."
 
 ---
-
-## Course Assets Included
-
-| Asset | What It Is |
-|-------|-----------|
-| AIDE Template Repo | Full workspace template (GitHub link) |
-| 7 Example Instructions | Ready-to-use task guides for content, research, reports |
-| fetch-news.py Script | Working script with free NewsAPI integration |
-| 3 Example Contexts | Filled-in examples for content creator, student, business ops |
-| Skool Community Access | Ask questions, share templates, get help |
-
 ---
 
-## Skool Setup Notes
+# SKOOL SETUP CHECKLIST
 
-**Community Name:** AI Digital Employee
-**Price:** $97
-**Classroom:** 7 lessons, each is 1 video
+## Community Settings
+- **Name:** AI Digital Employee
+- **Price:** $97
+- **Access:** Classroom + Community
 
-| # | Lesson | Video Length | Format |
-|---|--------|-------------|--------|
-| 1 | Why You're Using AI Wrong | 10-15 min | Talking head + diagrams |
-| 2 | Setup — Clone to Working | 15-20 min | Full screen share |
-| 3 | Context — Onboard Your AI | 15-20 min | Screen share, filling in files |
-| 4 | Instructions — Teach It Workflows | 15-20 min | Screen share, live build |
-| 5 | Scripts — Connect Real-Time Data | 10-15 min | Screen share, live build |
-| 6 | Real-World Workflows | 15-20 min | Screen share, running workflows |
-| 7 | Level Up — Power User Tips | 10-15 min | Screen share, tips + demos |
+## Classroom Structure
 
-**Total recording time: ~90-120 minutes across 7 videos**
+| # | Lesson Title | Video Length |
+|---|-------------|-------------|
+| 1 | The AI Employee Model | 10-15 min |
+| 2 | Setup — Zero to Working in 10 Minutes | 15-20 min |
+| 3 | Context — Onboard Your AI in 5 Minutes | 10-15 min |
+| 4 | Instructions — Automate Any Workflow | 15-20 min |
+| 5 | Scripts — Pull Live Data Into Your Workspace | 10-15 min |
+| 6 | Real-World Workflows You Can Steal | 15-20 min |
+| 7 | Level Up — Speed, Skills, and Scaling | 10-15 min |
 
-**Community Features:**
-- Pinned post: GitHub repo link + quick start checklist
-- Channel: "Share Your Instructions" — members post their custom instructions
-- Channel: "Troubleshooting" — help each other
-- Weekly post: new instruction idea or workflow tip
+## Pinned Post (Copy-Paste)
 
-**Drip Schedule (optional):**
-- Lessons 1-2: Available immediately (get them set up and seeing results fast)
-- Lessons 3-5: Unlock after 3 days
+```
+🚀 START HERE
+
+1. Watch Lesson 1 (10 min) — understand the model
+2. Watch Lesson 2 (15 min) — get set up + run the live demo
+3. Watch Lesson 3 (10 min) — onboard your AI with /project:setup
+4. Watch Lessons 4-7 at your own pace
+
+Template repo: github.com/systemstoscale/AI-Digital-Employee
+
+Free API key: newsapi.org/register
+
+Stuck? Post in the community. We're here to help.
+```
+
+## Community Channels
+
+1. **General** — Main discussion
+2. **Share Your Workflows** — Members post their custom instructions
+3. **Troubleshooting** — Help with setup and errors
+4. **Wins** — Show what your AI employee produced
+
+## Drip Schedule (Optional)
+
+- Lessons 1-3: Available immediately (get them set up and seeing results fast)
+- Lessons 4-5: Unlock after 3 days
 - Lessons 6-7: Unlock after 7 days
+
+## CTA for Skalers (End of Lesson 7)
+
+```
+Want to build AI systems like this for clients at $20-100K per project?
+
+Join the free Skalers community: skalers.io
+
+Learn the IDEA Framework. Build the 3 core AI systems.
+Land your first client in 90 days.
+```

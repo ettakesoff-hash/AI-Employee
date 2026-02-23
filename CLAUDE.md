@@ -63,6 +63,7 @@ This is what makes the system get smarter over time. Every fix gets documented s
 
 ## Commands
 
-- `/project:prime` — Load context and orient yourself for the session
+- `/project:setup` — First-time setup: asks you questions, fills in all context files automatically
+- `/project:prime` — Load context and orient yourself for the session (run at start of every session)
 - `/project:create-plan` — Create an implementation plan for a task
 - `/project:implement` — Execute a plan step by step
