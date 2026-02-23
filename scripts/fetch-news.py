@@ -43,7 +43,7 @@ def fetch_news(topic, api_key):
     })
     url = f"https://newsapi.org/v2/everything?{params}"
 
-    req = urllib.request.Request(url, headers={"User-Agent": "AIDE/1.0"})
+    req = urllib.request.Request(url, headers={"User-Agent": "AIEmployee/1.0"})
     with urllib.request.urlopen(req) as response:
         return json.loads(response.read().decode())
 

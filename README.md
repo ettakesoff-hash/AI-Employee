@@ -1,4 +1,4 @@
-# AIDE — AI Digital Employee
+# AI Employee
 
 Set up an AI employee in minutes. Give it context about you and your business, teach it your workflows, and let it do the work.
 
@@ -6,7 +6,7 @@ Set up an AI employee in minutes. Give it context about you and your business, t
 
 ## How It Works
 
-AIDE is a workspace template for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). It turns Claude into a digital employee by giving it:
+AI Employee is a workspace template for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). It turns Claude into an AI employee by giving it:
 
 1. **Context** — Who you are, what your business does, your current goals
 2. **Instructions** — Step-by-step task guides it can follow
@@ -18,7 +18,7 @@ context/       →  instructions/  →  scripts/   →  outputs/
 (who you are)     (what to do)      (how)         (results)
 ```
 
-When something breaks, AIDE doesn't just fail — it learns:
+When something breaks, it doesn't just fail. It learns:
 
 ```
 Error → Read error → Fix code → Test → Update instruction → System improved
@@ -39,8 +39,8 @@ Every failure makes the system smarter. Fixes get documented so the same mistake
 ### 1. Clone and open
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/aide-workspace.git
-cd aide-workspace
+git clone https://github.com/systemstoscale/AI-Employee.git
+cd AI-Employee
 ```
 
 Open the folder in VS Code or Antigravity.
@@ -110,7 +110,7 @@ python3 scripts/fetch-news.py "remote work"
 ## What's In the Box
 
 ```
-aide-workspace/
+AI-Employee/
 ├── .claude/
 │   ├── settings.json          # Permissions (safe mode)
 │   └── commands/
