@@ -1,8 +1,11 @@
-# Secrets
+# Secrets — never commit these
+.env
+credentials/
 credentials.json
 token.json
 *.pem
 *.key
+.streamlit/secrets.toml
 
 # Generated outputs (optional — uncomment to track)
 # outputs/
