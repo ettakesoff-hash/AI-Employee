@@ -1,0 +1,34 @@
+name: Daily Points Scraper
+
+on:
+  schedule:
+    - cron: '0 12 * * *'  # 12pm UTC every day
+  workflow_dispatch:        # Allow manual trigger from GitHub UI
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Write service account credentials
+        run: |
+          mkdir -p credentials
+          echo '${{ secrets.GCP_SERVICE_ACCOUNT_JSON }}' > credentials/google-service-account.json
+
+      - name: Run scraper
+        env:
+          GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}
+        run: |
+          cd $GITHUB_WORKSPACE
+          python scripts/points_scraper.py
