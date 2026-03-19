@@ -22,13 +22,13 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Write service account credentials
+        env:
+          GCP_JSON: ${{ secrets.GCP_SERVICE_ACCOUNT_JSON }}
         run: |
           mkdir -p credentials
-          echo '${{ secrets.GCP_SERVICE_ACCOUNT_JSON }}' > credentials/google-service-account.json
+          printf '%s' "$GCP_JSON" > credentials/google-service-account.json
 
       - name: Run scraper
         env:
           GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}
-        run: |
-          cd $GITHUB_WORKSPACE
-          python scripts/points_scraper.py
+        run: python scripts/points_scraper.py
