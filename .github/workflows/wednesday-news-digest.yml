@@ -1,0 +1,29 @@
+name: Wednesday Points & Miles News Digest
+
+on:
+  schedule:
+    - cron: '0 8 * * 3'   # Every Wednesday at 8am UTC (8am GMT / 9am BST)
+  workflow_dispatch:        # Allow manual trigger from GitHub UI for testing
+
+jobs:
+  send-digest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4 python-dotenv lxml feedparser anthropic
+
+      - name: Run weekly news digest
+        env:
+          AUTOMATION_GMAIL: ${{ secrets.AUTOMATION_GMAIL }}
+          AUTOMATION_GMAIL_PASSWORD: ${{ secrets.AUTOMATION_GMAIL_PASSWORD }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/weekly_news_digest.py
