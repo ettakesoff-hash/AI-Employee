@@ -364,7 +364,7 @@ def deduplicate(articles):
     return unique
 
 
-def select_top_articles(articles, n=10):
+def select_top_articles(articles, n=30):
     """Score, deduplicate, and return the top n articles."""
     for a in articles:
         a["score"] = score_article(a)
@@ -477,7 +477,7 @@ def main():
         return
 
     # Step 3: Select top 10 and format
-    top = select_top_articles(filtered, n=10)
+    top = select_top_articles(filtered, n=30)
     print(f"Top {len(top)} articles selected.")
     for a in top:
         print(f"  [{a['score']}] {a['title'][:70]}")
@@ -488,8 +488,8 @@ def main():
     email_subject = f"Wednesday Points & Miles Digest — {week_label}"
     email_body = (
         "Hi Estelle,\n\n"
-        "Here is your weekly digest. Copy and paste everything below the line "
-        "into your community. The first line is the post title.\n\n"
+        "Here are this week's top 30 stories. Pick the ones you want to use "
+        "and copy them into your community post.\n\n"
         f"{'─' * 60}\n\n"
         f"{digest}\n\n"
         f"{'─' * 60}\n\n"
