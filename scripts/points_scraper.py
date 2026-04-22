@@ -565,7 +565,7 @@ def fetch_current_promotions():
             promotions.append({
                 "programme_id": prog_id,
                 "programme_name": prog.get("name", texts[0]),
-                "start_date": "",
+                "start_date": today_str,  # First day seen = start date
                 "end_date": end_date,
                 "bonus_pct": bonus_pct,
                 "discount_type": discount_type or f"{bonus_pct}% bonus",
@@ -680,31 +680,41 @@ def write_promotions_to_sheet(ws, new_promotions):
 # ─────────────────────────────────────────────
 
 def run_scraper(programmes=None):
-    """Scrape all programmes and write to Google Sheets."""
+    """
+    Daily scraper — uses AwardWallet current promotions page as source of truth.
+    Start date = first day the promo appears (dedup by programme_id + end_date
+    means subsequent runs won't overwrite it).
+    Also checks OMAAT for programmes not covered by AwardWallet.
+    """
     spreadsheet = get_spreadsheet()
     ws = ensure_sheet_structure(spreadsheet)
 
-    target = programmes or PROGRAMMES.keys()
     all_promotions = []
 
-    for prog_id in target:
-        if prog_id not in PROGRAMMES:
-            log.warning(f"Unknown programme ID: {prog_id}")
-            continue
+    # Step 1: AwardWallet current promotions page (primary source)
+    log.info("=== Fetching AwardWallet current promotions ===")
+    try:
+        current_promos = fetch_current_promotions()
+        all_promotions.extend(current_promos)
+        time.sleep(2)
+    except Exception as e:
+        log.error(f"Error fetching AwardWallet current promotions: {e}")
 
+    # Step 2: OMAAT pages for programmes not on AwardWallet main page
+    omaat_programmes = [pid for pid, p in PROGRAMMES.items() if p["source"] == "onemileatatime"]
+    aw_covered = {p["programme_id"] for p in all_promotions}
+
+    for prog_id in omaat_programmes:
+        if prog_id in aw_covered:
+            continue
         prog = PROGRAMMES[prog_id]
         try:
-            if prog["source"] == "awardwallet":
-                promos = fetch_awardwallet_programme(prog_id, prog)
-            elif prog["source"] == "onemileatatime":
-                promos = fetch_omaat_programme(prog_id, prog)
-            else:
-                log.info(f"Skipping {prog_id} — source is {prog['source']}, manual entry only")
-                continue
-
+            promos = fetch_omaat_programme(prog_id, prog)
+            # Only keep promos with end_date >= today (current/future)
+            today_str = date.today().isoformat()
+            promos = [p for p in promos if p.get("end_date", "") >= today_str]
             all_promotions.extend(promos)
-            time.sleep(2)  # be polite to the servers
-
+            time.sleep(2)
         except Exception as e:
             log.error(f"Error scraping {prog_id}: {e}")
 
