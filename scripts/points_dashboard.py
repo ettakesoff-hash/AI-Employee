@@ -452,7 +452,14 @@ def main():
 
     OPEN_ENDED = pd.Timestamp("2099-12-31")
     # current is loaded directly from current_promos tab (cleared + rewritten daily)
+    # Filter: American Airlines only shown if bonus > 40%
     if not current.empty:
+        current = current[
+            ~(
+                (current["programme_id"] == "aadvantage") &
+                (current["bonus_pct"].fillna(0) <= 40)
+            )
+        ]
         current = current.sort_values("bonus_pct", ascending=False, na_position="last")
 
     if current.empty:
