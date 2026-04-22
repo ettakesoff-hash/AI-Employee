@@ -57,6 +57,10 @@ RSS_SOURCES = [
     {"name": "AwardWallet Blog",   "url": "https://awardwallet.com/blog/category/news/feed/"},
     {"name": "View from the Wing", "url": "https://viewfromthewing.com/feed/"},
     {"name": "Loyalty Lobby",      "url": "https://loyaltylobby.com/feed/"},
+    {"name": "Point Hacks",        "url": "https://www.pointhacks.com.au/feed/"},
+    {"name": "Australian Frequent Flyer", "url": "https://www.australianfrequentflyer.com.au/feed/"},
+    {"name": "Prince of Travel",   "url": "https://princeoftravel.com/feed/"},
+    {"name": "Frequent Miler",     "url": "https://frequentmiler.com/feed/"},
 ]
 
 # Credit card exclusions — any ONE of these in the title triggers exclusion
