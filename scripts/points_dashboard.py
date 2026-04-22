@@ -162,34 +162,42 @@ def get_sheet_id():
         return os.environ.get("GOOGLE_SHEET_ID", "")
 
 
-@st.cache_data(ttl=3600)  # Cache for 1 hour
+def _parse_promo_df(records):
+    """Parse raw sheet records into a typed DataFrame."""
+    df = pd.DataFrame(records)
+    if df.empty:
+        return df
+    df["start_date"] = pd.to_datetime(df["start_date"], errors="coerce")
+    df["end_date"] = pd.to_datetime(df["end_date"], errors="coerce")
+    df["added_date"] = pd.to_datetime(df["added_date"], errors="coerce")
+    df["bonus_pct"] = pd.to_numeric(df["bonus_pct"], errors="coerce")
+    df["cost_per_1000pts_usd"] = pd.to_numeric(df["cost_per_1000pts_usd"], errors="coerce")
+    df["cost_per_1000pts_native"] = pd.to_numeric(df["cost_per_1000pts_native"], errors="coerce")
+    return df
+
+
+@st.cache_data(ttl=3600)
 def load_promotions():
-    """Load promotions data from Google Sheets."""
+    """Load full promotions history from Google Sheets."""
     try:
         client = connect_sheets()
-        sheet_id = get_sheet_id()
-        spreadsheet = client.open_by_key(sheet_id)
-        ws = spreadsheet.worksheet("promotions")
-        records = ws.get_all_records()
-        df = pd.DataFrame(records)
-
-        if df.empty:
-            return pd.DataFrame()
-
-        # Parse dates
-        df["start_date"] = pd.to_datetime(df["start_date"], errors="coerce")
-        df["end_date"] = pd.to_datetime(df["end_date"], errors="coerce")
-        df["added_date"] = pd.to_datetime(df["added_date"], errors="coerce")
-
-        # Numeric columns
-        df["bonus_pct"] = pd.to_numeric(df["bonus_pct"], errors="coerce")
-        df["cost_per_1000pts_usd"] = pd.to_numeric(df["cost_per_1000pts_usd"], errors="coerce")
-        df["cost_per_1000pts_native"] = pd.to_numeric(df["cost_per_1000pts_native"], errors="coerce")
-
-        return df
-
+        spreadsheet = client.open_by_key(get_sheet_id())
+        records = spreadsheet.worksheet("promotions").get_all_records()
+        return _parse_promo_df(records)
     except Exception as e:
         st.error(f"Could not load data from Google Sheets: {e}")
+        return pd.DataFrame()
+
+
+@st.cache_data(ttl=3600)
+def load_current_promotions():
+    """Load today's active promotions from the current_promos tab (cleared daily by scraper)."""
+    try:
+        client = connect_sheets()
+        spreadsheet = client.open_by_key(get_sheet_id())
+        records = spreadsheet.worksheet("current_promos").get_all_records()
+        return _parse_promo_df(records)
+    except Exception:
         return pd.DataFrame()
 
 
@@ -386,7 +394,8 @@ def main():
     today_ts = pd.Timestamp(today)
 
     # Load data
-    df = load_promotions()
+    df = load_promotions()           # Full history — used for chart + stats
+    current = load_current_promotions()  # Today's active promos — used for cards
     base_df = load_base_prices()
     fx_rates = get_fx_rates()
 
@@ -442,20 +451,13 @@ def main():
     st.markdown('<div class="section-title">🔥 Currently On Sale</div>', unsafe_allow_html=True)
 
     OPEN_ENDED = pd.Timestamp("2099-12-31")
-    current = df[
-        (df["end_date"].notna()) &
-        ((df["end_date"] >= today_ts))
-    ].copy()
-
-    # Prefer most recent record per programme
+    # current is loaded directly from current_promos tab (cleared + rewritten daily)
     if not current.empty:
-        current = current.sort_values("end_date").drop_duplicates("programme_id", keep="last")
+        current = current.sort_values("bonus_pct", ascending=False, na_position="last")
 
     if current.empty:
         st.info("No active promotions found right now. Check back soon!")
     else:
-        # Sort by bonus % descending
-        current = current.sort_values("bonus_pct", ascending=False, na_position="last")
 
         # Summary stats row
         col1, col2, col3, col4 = st.columns(4)

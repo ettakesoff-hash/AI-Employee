@@ -612,6 +612,10 @@ def ensure_sheet_structure(spreadsheet):
         ws.append_row(SHEET_HEADERS)
         log.info("Created promotions tab with headers")
 
+    # current_promos tab — cleared and rewritten daily by scraper
+    curr_ws = get_or_create_worksheet(spreadsheet, "current_promos")
+    log.info("Ensured current_promos tab exists")
+
     # programmes tab
     prog_ws = get_or_create_worksheet(spreadsheet, "programmes")
     prog_headers = [
@@ -649,6 +653,17 @@ def ensure_sheet_structure(spreadsheet):
         log.info("Created base_prices tab — please fill in base prices manually")
 
     return spreadsheet.worksheet("promotions")
+
+
+def write_current_promos_to_sheet(spreadsheet, current_promotions):
+    """Overwrite the current_promos tab with today's active promotions."""
+    ws = spreadsheet.worksheet("current_promos")
+    ws.clear()
+    ws.append_row(SHEET_HEADERS)
+    if current_promotions:
+        rows = [[str(p.get(h, "")) for h in SHEET_HEADERS] for p in current_promotions]
+        ws.append_rows(rows, value_input_option="USER_ENTERED")
+    log.info(f"Wrote {len(current_promotions)} current promotions to current_promos tab")
 
 
 def write_promotions_to_sheet(ws, new_promotions):
@@ -718,8 +733,12 @@ def run_scraper(programmes=None):
         except Exception as e:
             log.error(f"Error scraping {prog_id}: {e}")
 
+    # Write to current_promos (cleared daily — source of truth for dashboard)
+    write_current_promos_to_sheet(spreadsheet, all_promotions)
+
+    # Write to promotions (append-only historical log)
     added = write_promotions_to_sheet(ws, all_promotions)
-    log.info(f"Scrape complete. {added} new records added.")
+    log.info(f"Scrape complete. {added} new records added to history.")
     return all_promotions
 
 
