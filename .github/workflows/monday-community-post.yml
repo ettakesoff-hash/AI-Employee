@@ -1,0 +1,28 @@
+name: Monday Community Post Email
+
+on:
+  schedule:
+    - cron: '0 8 * * 1'   # Every Monday at 8am UTC (8am GMT / 9am BST)
+  workflow_dispatch:        # Allow manual trigger from GitHub UI for testing
+
+jobs:
+  send-post:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4 python-dotenv lxml
+
+      - name: Run community post emailer
+        env:
+          AUTOMATION_GMAIL: ${{ secrets.AUTOMATION_GMAIL }}
+          AUTOMATION_GMAIL_PASSWORD: ${{ secrets.AUTOMATION_GMAIL_PASSWORD }}
+        run: python scripts/community_post_emailer.py
